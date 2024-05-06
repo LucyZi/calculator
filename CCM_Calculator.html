@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCM Revenue Calculator</title>
+    <link rel="icon" href="https://lucyzi.github.io/hccilogo/hcciLogo.png" type="image/png">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init({
+                publicKey: "fJfAwVVYWnSxk9npV",
+            });
+        })();
+    </script>
+
+      
+     
+    <style>
+        body {
+            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 73%;
+            max-width: 100%;
+            background-color: #ffffff;
+            margin: 20px auto;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+
+
+
+        .inner-container {
+            background-color: #03577C;
+            padding: 15px;
+            margin-top: 0;
+        }
+
+
+
+        .header {
+            text-align: center;
+            padding: 15px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .header img {
+            width: 170px;
+            margin-bottom: 5px;
+        }
+        
+        .header h1 {
+            font-size: 25px;
+            font-weight: bold;
+            color: #226E93;
+            margin-top: 0;
+        }
+
+        .intro-text {
+            padding: 15px;
+            font-size: 17px;
+            line-height: 2.3;
+        }
+
+        .intro-text2 {
+            padding: 15px;
+            font-size: 17px;
+            line-height: 2.3;
+            text-align: center;
+        }
+
+
+
+        #calculator {
+            width: 100%;
+            max-width: 630px;
+            margin: 0 auto;
+            margin-top: 20px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background-color: #ffffff;
+        }
+
+        #calculator h2 {
+            background-color: #004766;
+            color: #ffffff;
+            font-size: 27px;
+            font-weight: bold;
+            text-align: center;
+            height: 65px; 
+            line-height: 100px;
+            margin: 0 auto;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        
+        .form-group {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .form-group-dis {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        
+        
+        .form-group label {
+            margin-right: 10px;
+            font-weight: bold; 
+            font-size: 16px; 
+            color: #000000;
+        }
+
+        .form-group-dis label {
+            margin-right: 10px;
+            font-weight: bold; 
+            font-size: 16px; 
+            color: #595959;
+        }
+
+        
+        .form-group input {
+            width: 95px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-left: auto;
+            font-weight: bold; 
+            text-align: center;
+        }
+        
+        .form-group-dis input {
+            width: 95px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-left: auto;
+            font-weight: bold; 
+            text-align: center;
+        }
+        
+
+        .form-group-dis input[type="text"][disabled] {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            color: #595959;
+        }
+        
+
+
+        @media (max-width: 800px) {
+            body {
+                padding: 0;
+            }
+            .container {
+                width: 100%;
+                max-width: 95%;
+                background-color: #ffffff;
+                margin: 8px;
+                padding: 8px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                box-sizing: border-box;
+            }
+            .inner-container {
+                padding: 12px;
+            }
+            .header h1 {
+                font-size: 22px;
+                font-weight: bold;
+                color: #226E93;
+                margin-top: 0;
+            }
+            .header img {
+                width: 155px;
+                margin-bottom: 5px;
+            }
+            .intro-text {
+                padding: 5px;
+                font-size: 15px;
+                line-height: 1.9;
+            }
+
+            .intro-text2 {
+                padding: 5px;
+                font-size: 12px;
+                line-height: 1.9;
+                text-align: center;
+            }
+
+            #calculator {
+                margin: 0 auto;
+                width: 100%;
+                box-sizing: border-box;
+                padding: 10px;
+            }
+        }
+
+
+
+        
+        
+
+        @media (max-width: 800px) {
+            .form-group label {
+                font-size: 13px;
+                font-weight: bold;
+                width: 80%;
+                color: #000000;
+            }
+
+            .form-group-dis label {
+                font-size: 13px;
+                font-weight: bold;
+                width: 80%;
+                color: #595959;
+            }
+        
+            .form-group input {
+                font-size: 12px;
+                font-weight: bold;
+                width: 20%;
+                min-width: 60px;
+            }
+
+            .form-group-dis input {
+                font-size: 12px;
+                font-weight: bold;
+                width: 20%;
+                min-width: 60px;
+            }
+        }
+        
+
+        @media (max-width: 800px) {
+            #calculator h2 {
+                font-size: 18px;
+                height: 45px;
+                line-height: 50px;
+            }
+        }
+        
+
+
+        #calculator h3 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+
+        #results {
+            background-color: #0F99D6;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 0;
+        }
+        
+        #results label{
+            font-size: 18px;
+            color: #ffffff; 
+            font-weight: bold;
+        }
+        
+        #results input {
+            font-size: 25px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        
+        
+        
+        
+        .form-group2 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .form-group2 label {
+            flex: 1; 
+            margin-right: 20px;
+        }
+        
+        #results input[type="text"] {
+            background-color: transparent;
+            color: #ffffff; 
+            font-weight: bold;
+            border: none;
+            border-radius: 0;
+            margin-left: auto;
+            text-align: right;
+            width: auto;
+            flex: none; 
+            min-width: 100px;
+        }
+        
+        @media (max-width: 800px) {
+            #results label {
+                font-size: 15px;
+                color: #ffffff;
+                font-weight: bold;
+                line-height: 1.3;
+            }
+            #results input {
+                font-size: 18px;
+                color: #ffffff;
+                font-weight: bold;
+            }
+            #results input[type="text"] {
+                width: 30%;
+                min-width: 100px;
+            }
+            
+        }
+        
+
+        
+
+        @media (max-width: 800px) {
+            .form-group2 label {
+                font-size: 14px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 70%;
+            }
+        }
+        
+
+        @media (max-width: 400px) {
+            .form-group2 label {
+                white-space: normal;
+            }
+        }
+
+
+
+
+
+
+        .contact-section {
+            width: 75%;
+            max-width: 100%;
+            background-color: #ffffff;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        
+        
+
+
+        
+        .contact-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .contact-field {
+            flex-basis: 48%;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        
+        .contact-label {
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .contact-input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 14px;
+            color: #000000;
+        }
+        
+        .contact-input::placeholder {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .contact-input option {
+            color: #6C6B6B;
+            font-size: 14px;
+        }
+        
+        .contact-field2 { 
+            display: grid;
+            place-items: center; 
+        }
+        
+        .contact-button {
+            width:50%;
+            height:50px;
+            background-color: #004766;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .contact-required {
+            font-size: smaller;
+            font-style: italic;
+            color: red;
+        }
+        
+        .contact-input.textarea-height {
+            height: 150px;
+            color:#000000;
+            font-family: Arial, sans-serif;
+        }
+        .contact-input.textarea-height::placeholder {
+            font-size: 15px;
+            font-family: Arial, sans-serif;
+            color: #888;
+        }
+        
+        
+        @media (max-width: 800px) {
+            .contact-section {
+                width: 95%;
+                padding: 20px;
+                margin: 10px auto;
+            }
+            .contact-row, .contact-field {
+                flex-direction: column;
+            }
+            .contact-field {
+                width: 100%;
+            }
+            .g-recaptcha {
+                display: flex;
+                justify-content: center;
+                margin: 0 auto;
+                margin-bottom: 10px;
+            }
+        }
+        
+
+
+        .g-recaptcha {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+
+        #form-message {
+            text-align: center;
+            color: red;      
+            font-size: 18px;      
+            padding: 20px;       
+            margin-top: 10px;     
+            margin-bottom: 10px;  
+            font-weight: bold;
+        }
+
+
+        
+        @media (max-width: 800px) {
+            #form-message {
+                text-align: center;   
+                color: red;           
+                font-size: 14px;    
+                padding: 5px;     
+                margin-top: 7px;     
+                margin-bottom: 8px; 
+                line-height: 1.7;
+                font-weight: bold;
+            }
+
+        }
+
+
+
+            
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://lucyzi.github.io/hccilogo/hcciLogo.png" alt="HCCI Logo">
+            <h1>Chronic Care Management (CCM) Calculator</h1>
+        </div>
+
+        <div class="intro-text">
+            <p><b>Chronic Care Management (CCM)</b> encompasses coordinated activities aimed at effectively managing the health of patients with chronic conditions. It facilitates comprehensive oversight and resource integration, especially for those needing sustained medical attention across diverse settings, including home-based medical care (HBMC). Crucial in transitioning from episodic to holistic care, CCM emphasizes continuous patient monitoring and preventive management.</p>
+            <p>Utilizing the HCCI Chronic Care Management (CCM) calculator will provide healthcare practices with insights into potential financial sustainability and practice growth by optimizing reimbursement incentives, reducing hospitalizations and emergency department visits, improving operational efficiency, and fostering long-term patient retention through proactive management.</p>
+        </div>
+
+        <div class="inner-container" id="calculator-container" style="display:none;">
+
+            <div id="calculator">
+                <h2>CCM Revenue Calculator</h2>
+                
+                <div class="form-group">
+                    <label>Total number of PCPs in practice:</label>
+                    <input type="number" id="numPCPs" value="2" min="1" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 1, 100, 2)">
+                </div>
+                
+                <div class="form-group">
+                    <label>Patients per PCP (Typically 200):</label>
+                    <input type="number" id="patientsPerPCP" value="200" min="50" max="500" oninput="calculateRevenue()" onchange="validateInput(this, 50, 500, 200)">
+                </div>
+                
+                <div class="form-group">
+                    <label>% with two or more chronic conditions (Typically 90%):</label>
+                    <input type="number" id="chronicConditions" value="90" min="70" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 70, 100, 90)">
+                </div>
+                
+                <div class="form-group">
+                    <label>% covered by Medicare (Typically 90%):</label>
+                    <input type="number" id="coveredByMedicare" value="90" min="70" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 70, 100, 90)">
+                </div>
+        
+        
+        
+                <div class="form-group">
+                    <label>% patients billed 20+ minutes rate:</label>
+                    <input type="number" id="billed20minutes" value="50" min="20" max="80" oninput="calculateRevenue()" onchange="validateInput(this, 20, 80, 50)">
+                </div>
+        
+                <div class="form-group">
+                    <label>% patients billed 40+ minutes rate:</label>
+                    <input type="number" id="billed40minutes" value="30" min="10" max="40" oninput="calculateRevenue()" onchange="validateInput(this, 10, 40, 30)">
+                </div>
+        
+                <div class="form-group">
+                    <label>% patients billed 60+ minutes rate:</label>
+                    <input type="number" id="billed60minutes" value="20" min="10" max="40" oninput="calculateRevenue()" onchange="validateInput(this, 10, 40, 20)">
+                </div>
+        
+                <div class="form-group">
+                    <label>Administrative Time Cost (%):</label>
+                    <input type="number" id="adminTimeCost" value="20" min="10" max="50" oninput="calculateRevenue()" onchange="validateInput(this, 10, 50, 20)">
+                </div>
+        
+        
+                
+        
+        
+                
+                <div class="form-group-dis">
+                    <label>20+ minutes rate (Medicare average) (CPT 99490):</label>
+                    <input type="text" value="$64.02" disabled>
+                </div>
+                
+                <div class="form-group-dis">
+                    <label>40+ minutes rate (Medicare average) (CPT 99490+99439):</label>
+                    <input type="text" value="$112.47" disabled>
+                </div>
+                
+                <div class="form-group-dis">
+                    <label>60+ minutes rate (Medicare average) (CPT 99490+99439+99439):</label>
+                    <input type="text" value="$160.92" disabled>
+                </div>
+              
+                <div class="form-group-dis">
+                    <label>Total number of monthly hours of full-time clinical staff:</label>
+                    <input type="text" value="160" disabled>
+                </div>
+        
+        
+        
+        
+        
+                <div id="results">
+                    <h3>Results</h3>
+                    <div class="form-group2">
+                        <label style="color: #ffffff;">Total Monthly <br> CCM Revenue Potential:</label>
+                        <input type="text" id="totalRevenueM" value="0" disabled>
+                    </div>
+                    <div class="form-group2">
+                        <label style="color: #ffffff;">Total Annual <br> CCM Revenue Potential:</label>
+                        <input type="text" id="totalRevenueA" value="0" disabled>
+                    </div>
+                    <div class="form-group2">
+                        <label style="color: #ffffff;">Total Monthly <br> Staff Time:</label>
+                        <input type="text" id="totalStaffTime" value="0" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="intro-text2">
+            <p>If your practice would like to explore Chronic Care Management further, <br>contact us at help@HCCInstitute.org or 630-283-9222.</p>
+        </div>
+
+
+
+        <div id="form-message">*Please complete the form below to gain access to the calculator.</div>
+        
+        <div class="contact-section">
+            <form id="contactForm">
+                <div class="contact-row">
+                    <div class="contact-field">
+                        <label for="firstName" class="contact-label">Name</label>
+                        <input type="text" id="firstName" name="firstName" class="contact-input" placeholder="First" required>
+                    </div>
+                    <div class="contact-field">
+                        <label for="lastName" class="contact-label" style="visibility: hidden;">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" class="contact-input" placeholder="Last" required>
+                    </div>
+                </div>
+                
+                <div class="contact-row">
+                    <div class="contact-field">
+                        <label for="companyName" class="contact-label">Company Name <span class="contact-required">(Required)</span></label>
+                        <input type="text" id="companyName" name="companyName" class="contact-input" placeholder="Your company name" required>
+                    </div>
+                    <div class="contact-field">
+                        <label for="phone" class="contact-label">Phone Number <span class="contact-required">(Required)</span></label>
+                        <input type="tel" id="phone" name="phone" class="contact-input" placeholder="(123) 4567-890" required>
+                    </div>
+                </div>
+                <div class="contact-field">
+                    <label for="email" class="contact-label">Email <span class="contact-required">(Required)</span></label>
+                    <input type="email" id="email" name="email" class="contact-input" placeholder="Email" required>
+                </div>
+
+                <div class="contact-field">
+                    <label for="interest" class="contact-label">Are you interested in the following?</label>
+                    <select id="interest" name="interest" class="contact-input">
+                        <option value="" disabled selected style="display: none;">Select an option</option>
+                        <option value="demo">Schedule a Demo</option>
+                        <option value="subscription">Platform Subscription</option>
+                        <option value="consulting">Consulting Services</option>
+                        <option value="support">Customer Support</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="contact-field">
+                    <label for="discovery" class="contact-label"></label>
+                    <textarea id="discovery" name="discovery" class="contact-input textarea-height" placeholder="How did you hear about us?" required></textarea>
+                </div>
+
+
+
+
+                <div class="g-recaptcha" data-sitekey="6LdJ5s0pAAAAAA4dO6sWzh2cLaeFj_G1Ki_XbrEz"></div>
+
+
+
+                <div class="contact-field2">
+                    <button type="submit" class="contact-button">Submit</button>
+                </div>
+            </form>
+
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+
+    
+
+    </div>
+
+
+    
+    <script>
+        $(document).ready(function() {
+            // Check if the form has already been submitted using local storage
+            if (localStorage.getItem('formSubmitted')) {
+                // If the form has been submitted previously, show the container and change the message
+                $('#calculator-container').show();
+                $('#form-message').text("*Thank you for your submission. You may now use the calculator above. Further submissions are not required.");
+            } else {
+                // If not submitted, display the initial message and keep the calculator hidden
+                $('#form-message').text("*Please complete the form below to gain access to the calculator.");
+            }
+            
+            // Form submission handler
+            $('#contactForm').submit(function(event) {
+                event.preventDefault();
+                
+                // Optional: Check reCAPTCHA response before submitting
+                var recaptchaResponse = grecaptcha.getResponse();
+                if (recaptchaResponse.length === 0) {
+                    alert('Please complete the reCAPTCHA.');
+                    return;
+                }
+                
+                // Collect form data
+                var firstName = $('#firstName').val();
+                var lastName = $('#lastName').val();
+                var companyName = $('#companyName').val();
+                var phone = $('#phone').val();
+                var email = $('#email').val();
+                var interest = $('#interest').val();
+                var discovery = $('#discovery').val();
+                
+                var emailParams = {
+                    firstName: firstName,
+                    lastName: lastName,
+                    companyName: companyName,
+                    phone: phone,
+                    email: email,
+                    interest: interest,
+                    discovery: discovery,
+                    "g-recaptcha-response": recaptchaResponse
+                };
+                
+                // Send the email using EmailJS
+                emailjs.send("service_7rpqwlv", "template_9ximm0r", emailParams)
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                        alert('Thank you for your message. We will get back to you soon.');
+                        localStorage.setItem('formSubmitted', 'true'); // Set a flag in local storage
+                        $('#calculator-container').show(); // Show the calculator and the container
+                        $('#form-message').text("*Thank you for your submission. You may now use the calculator above. Further submissions are not required."); // Update the message
+                    }, function(error) {
+                        console.error('FAILED...', error);
+                        alert('Failed to send email: ' + JSON.stringify(error));
+                    });
+            });
+        });
+        
+
+
+        
+        
+ 
+
+        document.addEventListener('DOMContentLoaded', calculateRevenue);
+
+        function calculateRevenue() {
+            const numPCPs = parseFloat(document.getElementById("numPCPs").value);
+            const patientsPerPCP = parseFloat(document.getElementById("patientsPerPCP").value);
+            const chronicConditions = parseFloat(document.getElementById("chronicConditions").value) / 100;
+            const coveredByMedicare = parseFloat(document.getElementById("coveredByMedicare").value) / 100;
+            const billed20minutes = parseFloat(document.getElementById("billed20minutes").value) / 100;
+            const billed40minutes = parseFloat(document.getElementById("billed40minutes").value) / 100;
+            const billed60minutes = parseFloat(document.getElementById("billed60minutes").value) / 100;
+            const adminTimeCost = parseFloat(document.getElementById("adminTimeCost").value) / 100;
+        
+            // Fixed values for Medicare rates
+            const rate20minutes = 64.02;  // $ per 20+ minutes
+            const rate40minutes = 112.47; // $ per 40+ minutes
+            const rate60minutes = 160.92; // $ per 60+ minutes
+        
+            const totalPatients = numPCPs * patientsPerPCP;
+            const eligiblePatients = totalPatients * chronicConditions * coveredByMedicare;
+        
+            const totalRevenueMonthly = eligiblePatients * (billed20minutes * rate20minutes + billed40minutes * rate40minutes + billed60minutes * rate60minutes);
+            const totalRevenueAnnual = eligiblePatients * (billed20minutes * rate20minutes + billed40minutes * rate40minutes + billed60minutes * rate60minutes)*12;
+            const totalStaffTime = eligiblePatients * (billed20minutes * 20 + billed40minutes * 40 + billed60minutes * 60) * (1 + adminTimeCost) / 60 / 160;
+        
+            document.getElementById("totalRevenueM").value = `$${new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(totalRevenueMonthly)}`;
+            document.getElementById("totalRevenueA").value = `$${new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(totalRevenueAnnual)}`;
+            document.getElementById("totalStaffTime").value = `${totalStaffTime.toFixed(2)} FTE`;
+        }
+        
+
+        
+        function validateInput(element, min, max, defaultValue) {
+            const value = parseFloat(element.value);
+            if (value < min || value > max) {
+                alert(`The value for ${element.previousSibling.previousSibling.textContent.trim()} must be between ${min} and ${max}. Resetting to default value.`);
+                element.value = defaultValue;  // Reset to default value
+                calculateRevenue();  // Recalculate revenue with the default input
+            }
+        }
+
+        
+    </script>
+</body>
+</html>
