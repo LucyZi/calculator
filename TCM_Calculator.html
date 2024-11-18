@@ -591,19 +591,14 @@
 
                 <div class="form-group">
                     <label>Hourly Clinical Staff Cost ($):</label>
-                    <div class="input-container">
-                        <input type="number" id="clinicalCost" value="55" min="0" max="500" step="0.01" oninput="updateDollarDisplay(this, 'clinicalCostDisplay')" onchange="validateAndFormatDollarInput(this, 0, 500, 55, 'clinicalCostDisplay')">
-                        <span id="clinicalCostDisplay" class="formatted-value">$55.00</span>
-                    </div>
+                    <input type="number" id="clinicalCost" value="55.00" min="0" max="500" step="0.01" oninput="calculateRevenue()" onchange="validateInput(this, 0, 500, 55)">
                 </div>
                 
                 <div class="form-group">
                     <label>Hourly Provider Cost ($):</label>
-                    <div class="input-container">
-                        <input type="number" id="providerCost" value="120" min="0" max="500" step="0.01" oninput="updateDollarDisplay(this, 'providerCostDisplay')" onchange="validateAndFormatDollarInput(this, 0, 500, 120, 'providerCostDisplay')">
-                        <span id="providerCostDisplay" class="formatted-value">$120.00</span>
-                    </div>
+                    <input type="number" id="providerCost" value="120.00" min="0" max="500" step="0.01" oninput="calculateRevenue()" onchange="validateInput(this, 0, 500, 120)">
                 </div>
+                
                 
         
                 
@@ -840,29 +835,7 @@
 
 
 
-        function updateDollarDisplay(inputElement, displayElementId) {
-            const value = parseFloat(inputElement.value);
-            if (!isNaN(value)) {
-                // Format and display the value with two decimal places
-                document.getElementById(displayElementId).textContent = `$${value.toFixed(2)}`;
-            } else {
-                // Clear display if input is invalid
-                document.getElementById(displayElementId).textContent = `$0.00`;
-            }
-            calculateRevenue(); // Trigger recalculation
-        }
 
-        
-        function validateAndFormatDollarInput(inputElement, min, max, defaultValue, displayElementId) {
-            const value = parseFloat(inputElement.value);
-            if (isNaN(value) || value < min || value > max) {
-                alert(`The value must be between $${min.toFixed(2)} and $${max.toFixed(2)}. Resetting to default value.`);
-                inputElement.value = defaultValue.toFixed(2); // Reset to default
-            }
-        
-            // Update the display element
-            updateDollarDisplay(inputElement, displayElementId);
-        }
         
         
         
