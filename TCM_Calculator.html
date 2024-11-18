@@ -572,16 +572,19 @@
                     <input type="number" id="hospitalStays" value="0.8" min="0" max="10" step="0.1" oninput="calculateRevenue()" onchange="validateInput(this, 0, 10, 0.8)">
                 </div>
                 
-                <div class="form-group">
-                    <label>% Patients Receiving Moderate Complexity TCM <br> (within 14 Days of Discharge) (CPT 99495):</label>
-                    <input type="number" id="modComplexity" value="30" min="0" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 0, 100, 30)">
-                </div>
 
                 <div class="form-group">
-                    <label>% Patients Receiving High Complexity TCM <br> (within 7 Days of Discharge) (CPT 99496):</label>
-                    <input type="number" id="highComplexity" value="40" min="0" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 0, 100, 40)">
+                    <label>% Patients Receiving Moderate Complexity TCM <br> (within 14 Days of Discharge) (CPT 99495):</label>
+                    <input type="number" id="modComplexity" value="30" min="0" max="100" 
+                           oninput="validateSum()" onchange="validateSumInput(this, 0, 100, 30)">
                 </div>
-        
+                
+                <div class="form-group">
+                    <label>% Patients Receiving High Complexity TCM <br> (within 7 Days of Discharge) (CPT 99496):</label>
+                    <input type="number" id="highComplexity" value="40" min="0" max="100" 
+                           oninput="validateSum()" onchange="validateSumInput(this, 0, 100, 40)">
+                </div>
+                
 
 
                 <div class="form-group">
@@ -710,7 +713,30 @@
         }
 
 
-
+        function validateSumInput(element, min, max, defaultValue) {
+            const value = parseFloat(element.value);
+            if (value < min || value > max || isNaN(value)) {
+                alert(`The value must be between ${min} and ${max}. Resetting to default value.`);
+                element.value = defaultValue; // 重置为默认值
+            }
+            validateSum(); // 每次验证范围后，检查总和
+        }
+        
+        function validateSum() {
+            const modComplexity = parseFloat(document.getElementById("modComplexity").value) || 0;
+            const highComplexity = parseFloat(document.getElementById("highComplexity").value) || 0;
+        
+            if (modComplexity + highComplexity > 100) {
+                alert("The total percentage of patients receiving Moderate and High Complexity TCM cannot exceed 100%.");
+                // 如果超出范围，重置最后修改的字段
+                if (document.activeElement.id === "modComplexity") {
+                    document.getElementById("modComplexity").value = 100 - highComplexity;
+                } else if (document.activeElement.id === "highComplexity") {
+                    document.getElementById("highComplexity").value = 100 - modComplexity;
+                }
+            }
+        }
+        
 
 
         
