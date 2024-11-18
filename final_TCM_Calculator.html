@@ -591,16 +591,21 @@
 
                 <div class="form-group">
                     <label>Hourly Clinical Staff Cost ($):</label>
-                    <input type="number" id="clinicalCost" value="55.00" min="0" max="500" step="0.01" oninput="calculateRevenue()" onfocus="removeDollarSign(this)" onblur="addDollarSign(this)">
+                    <input type="text" id="clinicalCost" value="$55.00" 
+                           oninput="validateAndFormatInput(this, 0, 500)" 
+                           onfocus="removeDollarSign(this)" 
+                           onblur="addDollarSign(this)">
                 </div>
                 
                 <div class="form-group">
                     <label>Hourly Provider Cost ($):</label>
-                    <input type="number" id="providerCost" value="120.00" min="0" max="500" step="0.01" oninput="calculateRevenue()" onfocus="removeDollarSign(this)" onblur="addDollarSign(this)">
+                    <input type="text" id="providerCost" value="$120.00" 
+                           oninput="validateAndFormatInput(this, 0, 500)" 
+                           onfocus="removeDollarSign(this)" 
+                           onblur="addDollarSign(this)">
                 </div>
                 
-        
-                
+                           
         
         
                 
@@ -833,20 +838,29 @@
 
 
 
-            // 添加美元符号
-            function addDollarSign(element) {
-                const value = parseFloat(element.value);
-                if (!isNaN(value)) {
-                    element.value = `$${value.toFixed(2)}`; // 格式化为两位小数并加上美元符号
-                }
+        function addDollarSign(element) {
+            const value = parseFloat(element.value.replace(/[$,]/g, '')); // 移除 $ 和逗号符号
+            if (!isNaN(value)) {
+                element.value = `$${value.toFixed(2)}`; // 格式化为两位小数并添加 $
+            } else {
+                element.value = '$0.00'; // 如果输入为空或无效，设置为默认值
             }
+        }
         
-            // 移除美元符号
-            function removeDollarSign(element) {
-                const value = element.value.replace(/\$/g, ''); // 去掉美元符号
-                element.value = parseFloat(value) || ''; // 转换为数字或清空
+        function removeDollarSign(element) {
+            element.value = element.value.replace(/[$,]/g, ''); // 移除 $ 和逗号符号
+        }
+        
+        function validateAndFormatInput(element, min, max) {
+            const value = parseFloat(element.value.replace(/[$,]/g, '')); // 移除符号并转换为数字
+            if (!isNaN(value) && value >= min && value <= max) {
+                element.value = value.toFixed(2); // 实时保留两位小数
+            } else if (element.value !== '') {
+                alert(`Value must be between ${min} and ${max}`);
+                element.value = ''; // 清空无效输入
             }
-
+        }
+        
         
 
 
