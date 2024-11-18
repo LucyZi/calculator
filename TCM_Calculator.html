@@ -530,29 +530,7 @@
 
         }
 
-        .input-container {
-            display: flex;
-            align-items: center;
-            position: relative;
-            width: 100%; /* 保持与其他输入框的宽度一致 */
-        }
-        
-        .dollar-sign {
-            position: absolute;
-            left: 10px; /* 根据需求调整左边距，避免和输入框内容重叠 */
-            color: #555;
-            font-size: 16px;
-            line-height: 1; /* 确保符号在垂直方向居中 */
-        }
-        
-        .input-container input {
-            width: 100%; /* 确保输入框填满容器 */
-            padding-left: 25px; /* 增加内边距，为美元符号留出空间 */
-            box-sizing: border-box; /* 确保宽度包括内边距和边框 */
-            font-weight: bold;
-            text-align: right; /* 数字右对齐，更美观 */
-        }
-        
+
         
 
         
@@ -610,19 +588,14 @@
 
                 <div class="form-group">
                     <label>Hourly Clinical Staff Cost ($):</label>
-                    <div class="input-container">
-                        <span class="dollar-sign">$</span>
-                        <input type="number" id="clinicalCost" value="55" min="0" max="500" oninput="calculateRevenue()" onchange="validateInput(this, 0, 500, 55)">
-                    </div>
+                    <input type="text" id="clinicalCost" value="$55" oninput="formatDollarInput(this)" onchange="validateDollarInput(this, 0, 500, 55, 'clinicalCost')">
                 </div>
                 
                 <div class="form-group">
                     <label>Hourly Provider Cost ($):</label>
-                    <div class="input-container">
-                        <span class="dollar-sign">$</span>
-                        <input type="number" id="providerCost" value="120" min="0" max="500" oninput="calculateRevenue()" onchange="validateInput(this, 0, 500, 120)">
-                    </div>
+                    <input type="text" id="providerCost" value="$120" oninput="formatDollarInput(this)" onchange="validateDollarInput(this, 0, 500, 120, 'providerCost')">
                 </div>
+                
                 
         
                 
@@ -856,6 +829,31 @@
             }
         }
 
+
+        
+
+        function formatDollarInput(element) {
+            // Remove non-numeric characters except '.'
+            const value = element.value.replace(/[^0-9.]/g, '');
+            if (value) {
+                element.value = `$${value}`;
+            } else {
+                element.value = ''; // If empty, keep it blank
+            }
+        }
+        
+        function validateDollarInput(element, min, max, defaultValue, id) {
+            // Remove dollar sign and parse value
+            const value = parseFloat(element.value.replace(/[^0-9.]/g, ''));
+            if (isNaN(value) || value < min || value > max) {
+                alert(`The value for ${id} must be between $${min} and $${max}. Resetting to default value.`);
+                element.value = `$${defaultValue}`;
+            } else {
+                element.value = `$${value.toFixed(2)}`; // Ensure two decimal places
+            }
+            calculateRevenue(); // Recalculate revenue with valid value
+        }
+        
         
     </script>
 </body>
