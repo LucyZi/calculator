@@ -530,6 +530,21 @@
 
         }
 
+        .input-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .dollar-sign {
+            position: absolute;
+            left: 10px;
+            color: #555;
+            font-size: 16px;
+        }
+        
+
+        
 
 
             
@@ -560,41 +575,43 @@
                 
                 <div class="form-group">
                     <label>Medicare FFS Patients in Practice:</label>
-                    <input type="number" id="medicareFFS" value="100" min="1" max="1000" oninput="calculateRevenue()" onchange="validateInput(this, 1, 1000, 100)">
+                    <input type="number" id="medicareFFS" value="200" min="1" max="1000" oninput="calculateRevenue()" onchange="validateInput(this, 1, 1000, 200)">
                 </div>
                 
                 <div class="form-group">
-                    <label>% Patients with Eligible Discharges (Yearly):</label>
-                    <input type="number" id="eligibleDischarges" value="15" min="0" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 0, 100, 15)">
+                    <label>Hospital Stays per patient per year:</label>
+                    <input type="number" id="hospitalStays" value="0.8" min="0" max="10" oninput="calculateRevenue()" onchange="validateInput(this, 0, 10, 0.8)">
                 </div>
                 
                 <div class="form-group">
-                    <label>% Patients with Eligible Discharges Who Participate:</label>
-                    <input type="number" id="participate" value="50" min="0" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 0, 100, 50)">
-                </div>
-                
-                <div class="form-group">
-                    <label>% for Moderate Complexity TCM (within 14 Days of Discharge) (CPT 99495):</label>
-                    <input type="number" id="modComplexity" value="50" min="0" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 0, 100, 50)">
+                    <label>% Patients Receiving Moderate Complexity TCM (within 14 Days of Discharge) (CPT 99495):</label>
+                    <input type="number" id="modComplexity" value="30" min="0" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 0, 100, 30)">
                 </div>
 
                 <div class="form-group">
-                    <label>% for High Complexity TCM (within 7 Days of Discharge) (CPT 99496):</label>
-                    <input type="number" id="highComplexity" value="50" min="0" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 0, 100, 50)">
+                    <label>% Patients Receiving High Complexity TCM (within 7 Days of Discharge) (CPT 99496):</label>
+                    <input type="number" id="highComplexity" value="40" min="0" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 0, 100, 40)">
                 </div>
         
         
         
-                <div class="form-group">
-                    <label>Clinical Staff Cost per Hour:</label>
-                    <input type="number" id="clinicalCost" value="55" min="0" max="500" oninput="calculateRevenue()" onchange="validateInput(this, 0, 500, 55)">
-                </div>
-        
-                <div class="form-group">
-                    <label>Provider Cost per Hour:</label>
-                    <input type="number" id="providerCost" value="165" min="0" max="500" oninput="calculateRevenue()" onchange="validateInput(this, 0, 500, 165)">
-                </div>
 
+                <div class="form-group">
+                    <label>Hourly Clinical Staff Cost ($):</label>
+                    <div class="input-container">
+                        <span class="dollar-sign">$</span>
+                        <input type="number" id="clinicalCost" value="55" min="0" max="500" oninput="calculateRevenue()" onchange="validateInput(this, 0, 500, 55)">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Hourly Provider Cost ($):</label>
+                    <div class="input-container">
+                        <span class="dollar-sign">$</span>
+                        <input type="number" id="providerCost" value="120" min="0" max="500" oninput="calculateRevenue()" onchange="validateInput(this, 0, 500, 120)">
+                    </div>
+                </div>
+                
         
                 
         
@@ -602,32 +619,32 @@
                 
                 
                 <div class="form-group-dis">
-                    <label>Moderate Complexity TCM Fee (within 14 Days of Discharge) (CPT 99495):</label>
+                    <label>Moderate Complexity TCM Fee ($):</label>
                     <input type="text" value="$206.72" disabled>
                 </div>
                 
                 <div class="form-group-dis">
-                    <label>High Complexity TCM Fee (within 7 Days of Discharge) (CPT 99496):</label>
+                    <label>High Complexity TCM Fee ($):</label>
                     <input type="text" value="$279.62" disabled>
                 </div>
                 
                 <div class="form-group-dis">
-                    <label>Provider Time for Moderate Complexity TCM (within 14 Days of Discharge) (CPT 99495):</label>
+                    <label>Provider Time for Moderate Complexity TCM (minutes):</label>
                     <input type="text" value="40" disabled>
                 </div>
 
                 <div class="form-group-dis">
-                    <label>Provider Time for High Complexity TCM (within 7 Days of Discharge) (CPT 99496):</label>
+                    <label>Provider Time for High Complexity TCM (minutes):</label>
                     <input type="text" value="50" disabled>
                 </div>
 
                 <div class="form-group-dis">
-                    <label>Clinical Staff Time for Moderate Complexity TCM (within 14 Days of Discharge) (CPT 99495):</label>
+                    <label>Clinical Staff Time for Moderate Complexity TCM (minutes):</label>
                     <input type="text" value="45" disabled>
                 </div>
               
                 <div class="form-group-dis">
-                    <label>Clinical Staff Time for High Complexity TCM (within 7 Days of Discharge) (CPT 99496):</label>
+                    <label>Clinical Staff Time for High Complexity TCM (minutes):</label>
                     <input type="text" value="60" disabled>
                 </div>
         
@@ -645,32 +662,8 @@
                         <input type="text" id="totalCost" value="0" disabled>
                     </div>
                     <div class="form-group2">
-                        <label style="color: #ffffff;">Total Annual <br> TCM Net Revenue:</label>
+                        <label style="color: #ffffff;">Net Revenue:</label>
                         <input type="text" id="netRevenue" value="0" disabled>
-                    </div>
-                    <div class="form-group2">
-                        <label style="color: #ffffff;">Total Annual Moderate Complexity <br> TCM Participation:</label>
-                        <input type="text" id="annualModParticipation" value="0" disabled>
-                    </div>
-                    <div class="form-group2">
-                        <label style="color: #ffffff;">Total Annual High Complexity <br> TCM Participation:</label>
-                        <input type="text" id="annualHighParticipation" value="0" disabled>
-                    </div>
-                    <div class="form-group2">
-                        <label style="color: #ffffff;">Total Provider Time Needed <br> (Moderate Complexity):</label>
-                        <input type="text" id="totalProviderTimeMod" value="0" disabled>
-                    </div>
-                    <div class="form-group2">
-                        <label style="color: #ffffff;">Total Provider Time Needed <br> (High Complexity):</label>
-                        <input type="text" id="totalProviderTimeHigh" value="0" disabled>
-                    </div>
-                    <div class="form-group2">
-                        <label style="color: #ffffff;">Total Clinical Staff Time Needed <br> (Moderate Complexity):</label>
-                        <input type="text" id="totalClinicalTimeMod" value="0" disabled>
-                    </div>
-                    <div class="form-group2">
-                        <label style="color: #ffffff;">Total Clinical Staff Time Needed <br> (High Complexity):</label>
-                        <input type="text" id="totalClinicalTimeHigh" value="0" disabled>
                     </div>
                 </div>
             </div>
@@ -808,43 +801,30 @@
 
         function calculateRevenue() {
             const A = parseFloat(document.getElementById("medicareFFS").value);
-            const B = parseFloat(document.getElementById("eligibleDischarges").value) / 100;
-            const C = parseFloat(document.getElementById("participate").value) / 100;
+            const B = parseFloat(document.getElementById("hospitalStays").value);
             const D = parseFloat(document.getElementById("modComplexity").value) / 100;
             const E = parseFloat(document.getElementById("highComplexity").value) / 100;
             const L = parseFloat(document.getElementById("clinicalCost").value);
             const M = parseFloat(document.getElementById("providerCost").value);
 
             // Fixed values
-            const F = 206.72;
-            const G = 279.62;
-            const H = 40;
+            const F = 167.04;
+            const G = 236.52;
+            const H = 45;
             const I = 50;
             const J = 45;
             const K = 60;
 
-            // Calculated variables
-            const Q = A * B * C * D;
-            const R = A * B * C * E;
-            const S = (H / 60) * Q;
-            const T = (I / 60) * R;
-            const U = (J / 60) * Q;
-            const V = (K / 60) * R;
+
 
             // Results
-            const N = F * Q + G * R;
-            const O = (S * M + U * L) + (T * M + V * L);
+            const N = A*B*D*F+A*B*E*G;
+            const O = A*B*D*H/60*M + A*B*D*J/60*L + A*B*E*I/60*M + A*B*E*K/60*L;
             const P = N - O;
 
             document.getElementById("totalRevenue").value = `$${new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(N)}`;
             document.getElementById("totalCost").value = `$${new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(O)}`;
             document.getElementById("netRevenue").value = `$${new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(P)}`;
-            document.getElementById("annualModParticipation").value = Q.toFixed(0);
-            document.getElementById("annualHighParticipation").value = R.toFixed(0);
-            document.getElementById("totalProviderTimeMod").value = `${S.toFixed(2)} FTE`;
-            document.getElementById("totalProviderTimeHigh").value = `${T.toFixed(2)} FTE`;
-            document.getElementById("totalClinicalTimeMod").value = `${U.toFixed(2)} FTE`;
-            document.getElementById("totalClinicalTimeHigh").value = `${V.toFixed(2)} FTE`;
         }
 
 
