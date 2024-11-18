@@ -534,14 +534,25 @@
             display: flex;
             align-items: center;
             position: relative;
+            width: 100%; /* 保持与其他输入框的宽度一致 */
         }
         
         .dollar-sign {
             position: absolute;
-            left: 10px;
+            left: 10px; /* 根据需求调整左边距，避免和输入框内容重叠 */
             color: #555;
             font-size: 16px;
+            line-height: 1; /* 确保符号在垂直方向居中 */
         }
+        
+        .input-container input {
+            width: 100%; /* 确保输入框填满容器 */
+            padding-left: 25px; /* 增加内边距，为美元符号留出空间 */
+            box-sizing: border-box; /* 确保宽度包括内边距和边框 */
+            font-weight: bold;
+            text-align: right; /* 数字右对齐，更美观 */
+        }
+        
         
 
         
@@ -593,7 +604,8 @@
                     <input type="number" id="highComplexity" value="40" min="0" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 0, 100, 40)">
                 </div>
         
-        
+
+
         
 
                 <div class="form-group">
