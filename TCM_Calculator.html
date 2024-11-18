@@ -717,9 +717,9 @@
             const value = parseFloat(element.value);
             if (value < min || value > max || isNaN(value)) {
                 alert(`The value must be between ${min} and ${max}. Resetting to default value.`);
-                element.value = defaultValue; // 重置为默认值
+                element.value = defaultValue; // Resetting to default value
             }
-            validateSum(); // 每次验证范围后，检查总和
+            validateSum(); // validate sum after validating range
         }
         
         function validateSum() {
@@ -728,7 +728,7 @@
         
             if (modComplexity + highComplexity > 100) {
                 alert("The total percentage of patients receiving Moderate and High Complexity TCM cannot exceed 100%.");
-                // 如果超出范围，重置最后修改的字段
+                // if exceed,then reset
                 if (document.activeElement.id === "modComplexity") {
                     document.getElementById("modComplexity").value = 100 - highComplexity;
                 } else if (document.activeElement.id === "highComplexity") {
