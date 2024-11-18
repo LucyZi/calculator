@@ -531,7 +531,32 @@
         }
 
 
-        
+        /* 包裹输入框和符号的容器 */
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center; /* 垂直居中 */
+            width: 100%; /* 可选，适配其他输入框 */
+        }
+
+        /* 美元符号样式 */
+        .input-prefix {
+            position: absolute;
+            left: 10px; /* 控制符号距离左边的间距 */
+            font-size: 16px; /* 字体大小 */
+            color: #555; /* 字体颜色 */
+            font-weight: bold; /* 字体加粗 */
+        }
+
+        /* 输入框样式 */
+        input[type="number"] {
+            width: calc(100% - 20px); /* 宽度减去符号占用的空间 */
+            padding: 8px 10px; /* 调整上下左右内边距 */
+            padding-left: 25px; /* 留出符号的位置 */
+            font-size: 16px; /* 字体大小，和其他输入框一致 */
+            box-sizing: border-box; /* 确保宽度包括内边距 */
+        }
+      
 
         
 
@@ -583,31 +608,26 @@
                 </div>
         
 
-
                 <div class="form-group">
                     <label>Hourly Clinical Staff Cost ($):</label>
-                    <div style="display: flex; align-items: center;">
-                        <span style="margin-right: 5px;">$</span>
-                        <input type="number" id="clinicalCost" value="55.00" min="0" max="500" step="0.01" oninput="calculateRevenue()" onchange="validateInput(this, 0, 500, 55)">
+                    <div class="input-wrapper">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="clinicalCost" value="55.00" min="0" max="500" step="0.01" 
+                               oninput="calculateRevenue()" onchange="validateInput(this, 0, 500, 55)">
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label>Hourly Provider Cost ($):</label>
-                    <div style="display: flex; align-items: center;">
-                        <span style="margin-right: 5px;">$</span>
-                        <input type="number" id="providerCost" value="120.00" min="0" max="500" step="0.01" oninput="calculateRevenue()" onchange="validateInput(this, 0, 500, 120)">
+                    <div class="input-wrapper">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="providerCost" value="120.00" min="0" max="500" step="0.01" 
+                               oninput="calculateRevenue()" onchange="validateInput(this, 0, 500, 120)">
                     </div>
                 </div>
                 
                 
-                
-                
 
-
-                           
-        
-        
                 
                 
                 <div class="form-group-dis">
@@ -838,28 +858,7 @@
 
 
 
-        function addDollarSign(element) {
-            const value = parseFloat(element.value.replace(/[$,]/g, '')); // 移除 $ 和逗号符号
-            if (!isNaN(value)) {
-                element.value = `$${value.toFixed(2)}`; // 格式化为两位小数并添加 $
-            } else {
-                element.value = '$0.00'; // 如果输入为空或无效，设置为默认值
-            }
-        }
-        
-        function removeDollarSign(element) {
-            element.value = element.value.replace(/[$,]/g, ''); // 移除 $ 和逗号符号
-        }
-        
-        function validateAndFormatInput(element, min, max) {
-            const value = parseFloat(element.value.replace(/[$,]/g, '')); // 移除符号并转换为数字
-            if (!isNaN(value) && value >= min && value <= max) {
-                element.value = value.toFixed(2); // 实时保留两位小数
-            } else if (element.value !== '') {
-                alert(`Value must be between ${min} and ${max}`);
-                element.value = ''; // 清空无效输入
-            }
-        }
+
         
         
 
