@@ -608,12 +608,12 @@
                 
                 <div class="form-group-dis">
                     <label>Moderate Complexity TCM Fee ($):</label>
-                    <input type="text" value="$206.72" disabled>
+                    <input type="text" value="206.72" disabled>
                 </div>
                 
                 <div class="form-group-dis">
                     <label>High Complexity TCM Fee ($):</label>
-                    <input type="text" value="$279.62" disabled>
+                    <input type="text" value="279.62" disabled>
                 </div>
                 
                 <div class="form-group-dis">
@@ -656,78 +656,7 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-        <div id="form-message">
-            *Please provide the below information to access the TCM Calculator.<br>
-            Note: Access is browser-specific. Please use the same browser to avoid needing to resubmit the form.
-        </div>
-        
-        <div class="contact-section">
-            <form id="contactForm">
-                <div class="contact-row">
-                    <div class="contact-field">
-                        <label for="firstName" class="contact-label">First Name <span class="contact-required">(Required)</span></label>
-                        <input type="text" id="firstName" name="firstName" class="contact-input" placeholder="First" required>
-                    </div>
-                    <div class="contact-field">
-                        <label for="lastName" class="contact-label">Last Name <span class="contact-required">(Required)</span></label>
-                        <input type="text" id="lastName" name="lastName" class="contact-input" placeholder="Last" required>
-                    </div>
-                </div>
-
-                <div class="contact-row">
-                    <div class="contact-field">
-                        <label for="city" class="contact-label">City <span class="contact-required">(Required)</span></label>
-                        <input type="text" id="city" name="city" class="contact-input" placeholder="Your city" required>
-                    </div>
-                    <div class="contact-field">
-                        <label for="state" class="contact-label">State <span class="contact-required">(Required)</span></label>
-                        <input type="text" id="state" name="state" class="contact-input" placeholder="Your state" required>
-                    </div>
-                </div>
-                
-                <div class="contact-row">
-                    <div class="contact-field">
-                        <label for="companyName" class="contact-label">Organization Name <span class="contact-required">(Required)</span></label>
-                        <input type="text" id="companyName" name="companyName" class="contact-input" placeholder="Your organization name" required>
-                    </div>
-                    <div class="contact-field">
-                        <label for="phone" class="contact-label">Phone Number <span class="contact-required">(Required)</span></label>
-                        <input type="tel" id="phone" name="phone" class="contact-input" placeholder="(123) 4567-890" required>
-                    </div>
-                </div>
-                <div class="contact-field">
-                    <label for="email" class="contact-label">Email <span class="contact-required">(Required)</span></label>
-                    <input type="email" id="email" name="email" class="contact-input" placeholder="Email" required>
-                </div>
-
-
-
-
-
-
-                <div class="g-recaptcha" data-sitekey="6LdJ5s0pAAAAAA4dO6sWzh2cLaeFj_G1Ki_XbrEz"></div>
-
-
-
-                <div class="contact-field2">
-                    <button type="submit" class="contact-button">Submit</button>
-                </div>
-            </form>
-
-        </div>
-        
-        
-        
-        
-        
-        
-        
-        
+    
 
     
 
@@ -736,53 +665,7 @@
 
     
     <script>
-        $(document).ready(function() {
-            // Check if the form has already been submitted using local storage
-            if (localStorage.getItem('formSubmitted')) {
-                // If the form has been submitted previously, show the calculator container
-                $('#calculator-container').show();
-                // Hide the form and the message
-                $('.contact-section').hide();
-                $('#form-message').hide();
-            }
-        
-            // Form submission handler
-            $('#contactForm').submit(function(event) {
-                event.preventDefault();
-        
-                // Optional: Check reCAPTCHA response before submitting
-                var recaptchaResponse = grecaptcha.getResponse();
-                if (recaptchaResponse.length === 0) {
-                    alert('Please complete the reCAPTCHA.');
-                    return;
-                }
-        
-                // Collect form data
-                var formData = $(this).serialize();
-        
-                // Send the email using EmailJS
-                emailjs.sendForm('service_dgk3ces', 'template_kixrs7c', this)
-                    .then(function(response) {
-                        console.log('SUCCESS!', response.status, response.text);
-                        alert('Thank you for your message. We will get back to you soon.');
-                        localStorage.setItem('formSubmitted', 'true'); // Set a flag in local storage
-                        $('#calculator-container').show(); // Show the calculator container
-                        $('.contact-section').hide(); // Hide the form
-                        $('#form-message').hide(); // Hide the message
-                    }, function(error) {
-                        console.error('FAILED...', error);
-                        alert('Failed to send email: ' + JSON.stringify(error));
-                    });
-            });
-        });
-        
 
-        
-
-
-        
-        
- 
 
         document.addEventListener('DOMContentLoaded', calculateRevenue);
 
