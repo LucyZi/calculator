@@ -727,20 +727,22 @@
     
     <script>
         $(document).ready(function() {
-            // Check if the form has already been submitted using local storage
-            if (localStorage.getItem('formSubmitted')) {
-                // If the form has been submitted previously, show the calculator container
+            // Check if the form submission is recorded in sessionStorage
+            if (sessionStorage.getItem('formSubmitted')) {
+                // If the form has already been submitted in the current session, show the calculator
                 $('#calculator-container').show();
-                // Hide the form and the message
                 $('.contact-section').hide();
                 $('#form-message').hide();
+            } else {
+                // If the form has not been submitted, ensure the calculator is hidden and the form is visible
+                $('#calculator-container').hide();
             }
         
             // Form submission handler
             $('#contactForm').submit(function(event) {
                 event.preventDefault();
         
-                // Optional: Check reCAPTCHA response before submitting
+                // Check if reCAPTCHA is completed
                 var recaptchaResponse = grecaptcha.getResponse();
                 if (recaptchaResponse.length === 0) {
                     alert('Please complete the reCAPTCHA.');
@@ -755,10 +757,14 @@
                     .then(function(response) {
                         console.log('SUCCESS!', response.status, response.text);
                         alert('Thank you for your message. We will get back to you soon.');
-                        localStorage.setItem('formSubmitted', 'true'); // Set a flag in local storage
-                        $('#calculator-container').show(); // Show the calculator container
-                        $('.contact-section').hide(); // Hide the form
-                        $('#form-message').hide(); // Hide the message
+        
+                        // Record the form submission in sessionStorage
+                        sessionStorage.setItem('formSubmitted', 'true');
+        
+                        // Show the calculator and hide the form
+                        $('#calculator-container').show();
+                        $('.contact-section').hide();
+                        $('#form-message').hide();
                     }, function(error) {
                         console.error('FAILED...', error);
                         alert('Failed to send email: ' + JSON.stringify(error));
@@ -767,11 +773,6 @@
         });
         
 
-        
-
-
-        
-        
  
 
         document.addEventListener('DOMContentLoaded', calculateRevenue);
