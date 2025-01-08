@@ -726,7 +726,7 @@
 
     
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Check if the form submission is recorded in sessionStorage
             if (sessionStorage.getItem('formSubmitted')) {
                 // If the form has already been submitted in the current session, show the calculator
@@ -737,42 +737,55 @@
                 // If the form has not been submitted, ensure the calculator is hidden and the form is visible
                 $('#calculator-container').hide();
             }
-        
+    
             // Form submission handler
-            $('#contactForm').submit(function(event) {
+            $('#contactForm').submit(function (event) {
                 event.preventDefault();
-        
+    
+                // Disable the submit button to prevent duplicate submissions
+                $('#submitButton').prop('disabled', true);
+    
                 // Check if reCAPTCHA is completed
                 var recaptchaResponse = grecaptcha.getResponse();
                 if (recaptchaResponse.length === 0) {
                     alert('Please complete the reCAPTCHA.');
+                    $('#submitButton').prop('disabled', false); // Re-enable the submit button
                     return;
                 }
-        
+    
                 // Collect form data
                 var formData = $(this).serialize();
-        
+    
                 // Send the email using EmailJS
                 emailjs.sendForm('service_dgk3ces', 'template_kixrs7c', this)
-                    .then(function(response) {
+                    .then(function (response) {
                         console.log('SUCCESS!', response.status, response.text);
                         alert('Thank you for your message. We will get back to you soon.');
-        
+    
                         // Record the form submission in sessionStorage
                         sessionStorage.setItem('formSubmitted', 'true');
-        
+    
                         // Show the calculator and hide the form
                         $('#calculator-container').show();
                         $('.contact-section').hide();
                         $('#form-message').hide();
-                    }, function(error) {
+    
+                        // Reset reCAPTCHA after successful submission
+                        grecaptcha.reset();
+                    })
+                    .catch(function (error) {
                         console.error('FAILED...', error);
                         alert('Failed to send email: ' + JSON.stringify(error));
+                    })
+                    .finally(function () {
+                        // Re-enable the submit button
+                        $('#submitButton').prop('disabled', false);
                     });
             });
         });
-        
+    
 
+        
  
 
         document.addEventListener('DOMContentLoaded', calculateRevenue);
