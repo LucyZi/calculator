@@ -607,17 +607,17 @@
                 
                 <div class="form-group-dis">
                     <label>20+ minutes rate (Medicare average) (CPT 99490):</label>
-                    <input type="text" value="$64.02" disabled>
+                    <input type="text" value="$60.49" disabled>
                 </div>
                 
                 <div class="form-group-dis">
                     <label>40+ minutes rate (Medicare average) (CPT 99490+99439):</label>
-                    <input type="text" value="$112.47" disabled>
+                    <input type="text" value="$106.42" disabled>
                 </div>
                 
                 <div class="form-group-dis">
                     <label>60+ minutes rate (Medicare average) (CPT 99490+99439+99439):</label>
-                    <input type="text" value="$160.92" disabled>
+                    <input type="text" value="$152.35" disabled>
                 </div>
               
                 <div class="form-group-dis">
@@ -801,9 +801,9 @@
             const adminTimeCost = parseFloat(document.getElementById("adminTimeCost").value) / 100;
         
             // Fixed values for Medicare rates
-            const rate20minutes = 64.02;  // $ per 20+ minutes
-            const rate40minutes = 112.47; // $ per 40+ minutes
-            const rate60minutes = 160.92; // $ per 60+ minutes
+            const rate20minutes = 60.49;  // $ per 20+ minutes
+            const rate40minutes = 106.42; // $ per 40+ minutes
+            const rate60minutes = 152.35; // $ per 60+ minutes
         
             const totalPatients = numPCPs * patientsPerPCP;
             const eligiblePatients = totalPatients * chronicConditions * coveredByMedicare;
