@@ -336,7 +336,7 @@
                 white-space: normal;
             }
         }
-
+        
         /* Contact form styles */
         .contact-section {
             width: 75%;
@@ -492,6 +492,7 @@
             <p>If your practice would like to explore Advanced Primary Care Management further, <br>contact us at <a href="mailto:help@hccinstitute.org">help@hccinstitute.org</a> or 630-283-9222.</p>
         </div>
 
+        <!-- Calculator container, hidden by default -->
         <div class="inner-container" id="calculator-container" style="display:none;">
             <div id="calculator">
                 <h2>APCM Revenue Calculator</h2>
@@ -502,38 +503,33 @@
                 </div>
                 
                 <div class="form-group">
-                    <label>Patients per PCP (Typically 200):</label>
+                    <label>Medicare Patients per PCP:</label>
                     <input type="number" id="patientsPerPCP" value="200" min="50" max="500" oninput="calculateRevenue()" onchange="validateInput(this, 50, 500, 200)">
                 </div>
                 
                 <div class="form-group">
-                    <label>% of patients receiving APCM services (Typically 80%):</label>
-                    <input type="number" id="apcmEligible" value="80" min="30" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 30, 100, 80)">
+                    <label>% of patients receiving APCM services:</label>
+                    <input type="number" id="apcmEligible" value="95" min="30" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 30, 100, 95)">
                 </div>
                 
-                <div class="form-group">
-                    <label>% covered by Medicare (Typically 90%):</label>
-                    <input type="number" id="coveredByMedicare" value="90" min="70" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 70, 100, 90)">
-                </div>
-        
-                <div class="form-group">
-                    <label>% patients billed with G0556 (Basic APCM):</label>
-                    <input type="number" id="billedG0556" value="50" min="10" max="80" oninput="calculateRevenue()" onchange="validateInput(this, 10, 80, 50)">
-                </div>
-        
-                <div class="form-group">
-                    <label>% patients billed with G0557 (2+ chronic conditions):</label>
-                    <input type="number" id="billedG0557" value="30" min="10" max="70" oninput="calculateRevenue()" onchange="validateInput(this, 10, 70, 30)">
-                </div>
-        
                 <div class="form-group">
                     <label>% patients billed with G0558 (QMB with 2+ chronic conditions):</label>
-                    <input type="number" id="billedG0558" value="20" min="0" max="40" oninput="calculateRevenue()" onchange="validateInput(this, 0, 40, 20)">
+                    <input type="number" id="billedG0558" value="65" min="40" max="80" oninput="updateG0556(); calculateRevenue()" onchange="validateInput(this, 40, 80, 65)">
                 </div>
-                
+
+                <div class="form-group">
+                    <label>% patients billed with G0557 (2+ chronic conditions):</label>
+                    <input type="number" id="billedG0557" value="30" min="10" max="50" oninput="updateG0556(); calculateRevenue()" onchange="validateInput(this, 10, 50, 30)">
+                </div>
+        
                 <div class="form-group-dis">
-                    <label>G0556 rate (Basic APCM):</label>
-                    <input type="text" value="$15.20" disabled>
+                    <label>% patients billed with G0556 (Basic APCM):</label>
+                    <input type="number" id="billedG0556" value="5" readonly>
+                </div>
+
+                <div class="form-group-dis">
+                    <label>G0558 rate (QMB with 2+ chronic conditions):</label>
+                    <input type="text" value="$107.07" disabled>
                 </div>
                 
                 <div class="form-group-dis">
@@ -542,8 +538,8 @@
                 </div>
                 
                 <div class="form-group-dis">
-                    <label>G0558 rate (QMB with 2+ chronic conditions):</label>
-                    <input type="text" value="$107.07" disabled>
+                    <label>G0556 rate (Basic APCM):</label>
+                    <input type="text" value="$15.20" disabled>
                 </div>
         
                 <div id="results">
@@ -564,13 +560,13 @@
             </div>
         </div>
 
-        <!-- Form information message -->
+        <!-- Form submission message -->
         <div id="form-message">
             *Please provide the below information to access the APCM Calculator.<br>
             Note: Access is browser-specific. Please use the same browser to avoid needing to resubmit the form.
         </div>
         
-        <!-- Contact form -->
+        <!-- Contact form section -->
         <div class="contact-section">
             <form id="contactForm">
                 <div class="contact-row">
@@ -621,14 +617,14 @@
     
     <script>
         $(document).ready(function () {
-            // Check if the form submission is recorded in sessionStorage
+            // Check if form submission is recorded in sessionStorage
             if (sessionStorage.getItem('formSubmitted')) {
-                // If the form has already been submitted in the current session, show the calculator
+                // If the form has been submitted in the current session, show the calculator
                 $('#calculator-container').show();
                 $('.contact-section').hide();
                 $('#form-message').hide();
             } else {
-                // If the form has not been submitted, ensure the calculator is hidden and the form is visible
+                // If the form has not been submitted, ensure the calculator is hidden and the form visible
                 $('#calculator-container').hide();
             }
     
@@ -636,7 +632,7 @@
             $('#contactForm').submit(function (event) {
                 event.preventDefault();
     
-                // Disable the submit button to prevent duplicate submissions
+                // Disable submit button to prevent duplicate submissions
                 $('#submitButton').prop('disabled', true);
     
                 // Check if reCAPTCHA is completed
@@ -678,30 +674,26 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', calculateRevenue);
+        document.addEventListener('DOMContentLoaded', function() {
+            updateG0556();
+            calculateRevenue();
+        });
 
         function calculateRevenue() {
             const numPCPs = parseFloat(document.getElementById("numPCPs").value);
             const patientsPerPCP = parseFloat(document.getElementById("patientsPerPCP").value);
             const apcmEligible = parseFloat(document.getElementById("apcmEligible").value) / 100;
-            const coveredByMedicare = parseFloat(document.getElementById("coveredByMedicare").value) / 100;
             const billedG0556 = parseFloat(document.getElementById("billedG0556").value) / 100;
             const billedG0557 = parseFloat(document.getElementById("billedG0557").value) / 100;
             const billedG0558 = parseFloat(document.getElementById("billedG0558").value) / 100;
-        
-            // Validate that percentages add up to 100%
-            if (Math.abs((billedG0556 + billedG0557 + billedG0558) - 1) > 0.01) {
-                alert("The percentages for G0556, G0557, and G0558 should add up to 100%. Please adjust your inputs.");
-                return;
-            }
 
-            // Fixed values for APCM rates
+            // Fixed values for APCM rates (estimated based on similar services)
             const rateG0556 = 15.20;  // $ per Basic APCM
-            const rateG0557 = 48.84;  // $ per APCM with 2+ chronic conditions
+            const rateG0557 = 48.84; // $ per APCM with 2+ chronic conditions
             const rateG0558 = 107.07; // $ per APCM for QMB with 2+ chronic conditions
         
             const totalPatients = numPCPs * patientsPerPCP;
-            const eligiblePatients = totalPatients * apcmEligible * coveredByMedicare;
+            const eligiblePatients = totalPatients * apcmEligible;
         
             const totalRevenueMonthly = eligiblePatients * (billedG0556 * rateG0556 + billedG0557 * rateG0557 + billedG0558 * rateG0558);
             const totalRevenueAnnual = totalRevenueMonthly * 12;
@@ -719,6 +711,20 @@
                 element.value = defaultValue;  // Reset to default value
                 calculateRevenue();  // Recalculate revenue with the default input
             }
+        }
+
+        function updateG0556() {
+            const billedG0558 = parseFloat(document.getElementById("billedG0558").value) || 0;
+            const billedG0557 = parseFloat(document.getElementById("billedG0557").value) || 0;
+            
+            // Ensure that the sum of G0558 and G0557 does not exceed 100
+            if (billedG0558 + billedG0557 > 100) {
+                alert("The sum of G0558 and G0557 percentages cannot exceed 100%. G0556 will be calculated as the remainder.");
+                return;
+            }
+            
+            const billedG0556 = 100 - billedG0558 - billedG0557;
+            document.getElementById("billedG0556").value = billedG0556.toFixed(0);
         }
     </script>
 </body>
