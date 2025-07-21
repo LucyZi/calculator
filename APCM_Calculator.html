@@ -521,6 +521,14 @@
                     <label>% patients billed with G0557 (2+ chronic conditions):</label>
                     <input type="number" id="billedG0557" value="75" min="0" max="80" oninput="updateG0556(); calculateRevenue()" onchange="validateInput(this, 0, 80, 75)">
                 </div>
+
+
+                <div class="form-group">
+                    <label>Administrative Time Cost (%):</label>
+                    <input type="number" id="adminTimeCost" value="20" min="10" max="50" oninput="calculateRevenue()" onchange="validateInput(this, 10, 50, 20)">
+                </div>
+
+
                 
         
                 <div class="form-group-dis">
@@ -557,6 +565,12 @@
                         <label style="color: #ffffff;">Average Monthly <br> Revenue Per Patient:</label>
                         <input type="text" id="avgRevenuePerPatient" value="0" disabled>
                     </div>
+
+
+                    <div class="form-group2">
+                        <label style="color: #ffffff;">Total Monthly <br> Staff Time:</label>
+                        <input type="text" id="totalStaffTime" value="0" disabled>
+                    </div>
                 </div>
             </div>
         </div>
@@ -567,6 +581,7 @@
             Note: Access is browser-specific. Please use the same browser to avoid needing to resubmit the form.
         </div>
         
+
         <!-- Contact form section -->
         <div class="contact-section">
             <form id="contactForm">
@@ -614,6 +629,7 @@
                 </div>
             </form>
         </div>
+
     </div>
     
     <script>
@@ -687,6 +703,9 @@
             const billedG0556 = parseFloat(document.getElementById("billedG0556").value) / 100;
             const billedG0557 = parseFloat(document.getElementById("billedG0557").value) / 100;
             const billedG0558 = parseFloat(document.getElementById("billedG0558").value) / 100;
+            const adminTimeCost = parseFloat(document.getElementById("adminTimeCost").value) / 100;
+
+
 
             // Fixed values for APCM rates (estimated based on similar services)
             const rateG0556 = 15.20;  // $ per Basic APCM
@@ -699,10 +718,17 @@
             const totalRevenueMonthly = eligiblePatients * (billedG0556 * rateG0556 + billedG0557 * rateG0557 + billedG0558 * rateG0558);
             const totalRevenueAnnual = totalRevenueMonthly * 12;
             const avgRevenuePerPatient = totalRevenueMonthly / totalPatients;
+
+            const totalStaffTime = eligiblePatients * (billedG0556 * 20 + billedG0557 * 40 + billedG0558 * 60) * (1 + adminTimeCost) / 60 / 160;
+
+
+
         
             document.getElementById("totalRevenueM").value = `$${new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(totalRevenueMonthly)}`;
             document.getElementById("totalRevenueA").value = `$${new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(totalRevenueAnnual)}`;
             document.getElementById("avgRevenuePerPatient").value = `$${new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(avgRevenuePerPatient)}`;
+
+            document.getElementById("totalStaffTime").value = `${totalStaffTime.toFixed(2)} FTE`;
         }
         
         function validateInput(element, min, max, defaultValue) {
