@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APCM Revenue Calculator</title>
+    <link rel="icon" href="https://lucyzi.github.io/hccilogo/hcciLogo.png" type="image/png">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init({
+                publicKey: "1eaIggIsZl9GiK_5q",
+            });
+        })();
+    </script>
+    
+    <style>
+        body {
+            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 73%;
+            max-width: 100%;
+            background-color: #ffffff;
+            margin: 20px auto;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+
+        .inner-container {
+            background-color: #03577C;
+            padding: 15px;
+            margin-top: 0;
+        }
+
+        .header {
+            text-align: center;
+            padding: 15px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .header img {
+            width: 170px;
+            margin-bottom: 5px;
+        }
+        
+        .header h1 {
+            font-size: 25px;
+            font-weight: bold;
+            color: #226E93;
+            margin-top: 0;
+        }
+
+        .intro-text {
+            padding: 15px;
+            font-size: 19px;
+            line-height: 2.6;
+        }
+
+        .intro-text2 {
+            padding: 15px;
+            font-size: 19px;
+            line-height: 2.3;
+            text-align: center;
+            color: #0F99D6;
+            font-weight: bold;
+        }
+
+        .intro-text2 a {
+            color: #0F99D6;
+        }
+    
+        #calculator {
+            width: 100%;
+            max-width: 630px;
+            margin: 0 auto;
+            margin-top: 20px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background-color: #ffffff;
+        }
+
+        #calculator h2 {
+            background-color: #004766;
+            color: #ffffff;
+            font-size: 27px;
+            font-weight: bold;
+            text-align: center;
+            height: 65px; 
+            line-height: 100px;
+            margin: 0 auto;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .form-group-dis {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            margin-right: 10px;
+            font-weight: bold; 
+            font-size: 16px; 
+            color: #000000;
+        }
+
+        .form-group-dis label {
+            margin-right: 10px;
+            font-weight: bold; 
+            font-size: 16px; 
+            color: #595959;
+        }
+        
+        .form-group input {
+            width: 95px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-left: auto;
+            font-weight: bold; 
+            text-align: center;
+        }
+        
+        .form-group-dis input {
+            width: 95px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-left: auto;
+            font-weight: bold; 
+            text-align: center;
+        }
+        
+        .form-group-dis input[type="text"][disabled] {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            color: #595959;
+        }
+        
+        @media (max-width: 800px) {
+            body {
+                padding: 0;
+            }
+            .container {
+                width: 100%;
+                max-width: 95%;
+                background-color: #ffffff;
+                margin: 8px;
+                padding: 8px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                box-sizing: border-box;
+            }
+            .inner-container {
+                padding: 12px;
+            }
+            .header h1 {
+                font-size: 22px;
+                font-weight: bold;
+                color: #226E93;
+                margin-top: 0;
+            }
+            .header img {
+                width: 155px;
+                margin-bottom: 5px;
+            }
+            .intro-text {
+                padding: 5px;
+                font-size: 15px;
+                line-height: 1.9;
+            }
+
+            .intro-text2 {
+                padding: 5px;
+                font-size: 15px;
+                line-height: 1.9;
+                text-align: center;
+                color: #0F99D6;
+                font-weight: bold;
+            }
+
+            #calculator {
+                margin: 0 auto;
+                width: 100%;
+                box-sizing: border-box;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .form-group label {
+                font-size: 13px;
+                font-weight: bold;
+                width: 80%;
+                color: #000000;
+            }
+
+            .form-group-dis label {
+                font-size: 13px;
+                font-weight: bold;
+                width: 80%;
+                color: #595959;
+            }
+        
+            .form-group input {
+                font-size: 12px;
+                font-weight: bold;
+                width: 20%;
+                min-width: 60px;
+            }
+
+            .form-group-dis input {
+                font-size: 12px;
+                font-weight: bold;
+                width: 20%;
+                min-width: 60px;
+            }
+        }
+        
+        @media (max-width: 800px) {
+            #calculator h2 {
+                font-size: 18px;
+                height: 45px;
+                line-height: 50px;
+            }
+        }
+        
+        #calculator h3 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        #results {
+            background-color: #0F99D6;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 0;
+        }
+        
+        #results label{
+            font-size: 18px;
+            color: #ffffff; 
+            font-weight: bold;
+        }
+        
+        #results input {
+            font-size: 25px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        
+        .form-group2 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .form-group2 label {
+            flex: 1; 
+            margin-right: 20px;
+        }
+        
+        #results input[type="text"] {
+            background-color: transparent;
+            color: #ffffff; 
+            font-weight: bold;
+            border: none;
+            border-radius: 0;
+            margin-left: auto;
+            text-align: right;
+            width: auto;
+            flex: none; 
+            min-width: 100px;
+        }
+        
+        @media (max-width: 800px) {
+            #results label {
+                font-size: 15px;
+                color: #ffffff;
+                font-weight: bold;
+                line-height: 1.3;
+            }
+            #results input {
+                font-size: 18px;
+                color: #ffffff;
+                font-weight: bold;
+            }
+            #results input[type="text"] {
+                width: 30%;
+                min-width: 100px;
+            }
+        }
+        
+        @media (max-width: 800px) {
+            .form-group2 label {
+                font-size: 14px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 70%;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .form-group2 label {
+                white-space: normal;
+            }
+        }
+        
+        /* Contact form styles */
+        .contact-section {
+            width: 75%;
+            max-width: 100%;
+            background-color: #ffffff;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        
+        .contact-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 17px;
+        }
+        
+        .contact-field {
+            flex-basis: 48%;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 17px;
+        }
+        
+        .contact-label {
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .contact-input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 14px;
+            color: #000000;
+        }
+        
+        .contact-input::placeholder {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .contact-input option {
+            color: #6C6B6B;
+            font-size: 14px;
+        }
+        
+        .contact-field2 { 
+            display: grid;
+            place-items: center; 
+        }
+        
+        .contact-button {
+            width:50%;
+            height:50px;
+            background-color: #004766;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .contact-required {
+            font-size: smaller;
+            font-style: italic;
+            color: #0F99D6;
+        }
+        
+        .contact-input.textarea-height {
+            height: 150px;
+            color:#000000;
+            font-family: Arial, sans-serif;
+        }
+        .contact-input.textarea-height::placeholder {
+            font-size: 15px;
+            font-family: Arial, sans-serif;
+            color: #888;
+        }
+        
+        @media (max-width: 800px) {
+            .contact-section {
+                width: 95%;
+                padding: 20px;
+                margin: 15px auto;
+            }
+            .contact-row, .contact-field {
+                flex-direction: column;
+                margin-bottom: 10px;
+            }
+            .contact-field {
+                width: 100%;
+            }
+
+            .g-recaptcha {
+                display: flex;
+                justify-content: center;
+                margin: 0 auto;
+                margin-bottom: 10px;
+            }
+        }
+        
+        .g-recaptcha {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        #form-message {
+            text-align: center;
+            color: #000000;      
+            font-size: 19px;      
+            padding: 20px;       
+            margin-top: 10px;     
+            margin-bottom: 10px;  
+            line-height: 1.9;
+        }
+        
+        @media (max-width: 800px) {
+            #form-message {
+                text-align: center;   
+                color: #000000;           
+                font-size: 15px;    
+                padding: 5px;     
+                margin-top: 8px;     
+                margin-bottom: 8px; 
+                line-height: 1.7;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://lucyzi.github.io/hccilogo/hcciLogo.png" alt="HCCI Logo">
+            <h1>Advanced Primary Care Management (APCM) Calculator</h1>
+        </div>
+
+        <div class="intro-text">
+            <p>Utilizing the Advanced Primary Care Management (APCM) calculator will provide healthcare practices with insights into potential financial sustainability and practice growth by optimizing reimbursement through the new bundled payment model. Starting January 1, 2025, APCM allows for simplified billing while providing comprehensive care to patients, reducing hospitalizations and emergency department visits, improving operational efficiency, and fostering long-term patient retention through coordinated care management.</p>
+        </div>
+
+        <div class="intro-text2">
+            <p>If your practice would like to explore Advanced Primary Care Management further, <br>contact us at <a href="mailto:help@hccinstitute.org">help@hccinstitute.org</a> or 630-283-9222.</p>
+        </div>
+
+        <!-- Calculator container, hidden by default -->
+        <div class="inner-container" id="calculator-container">
+            <div id="calculator">
+                <h2>APCM Revenue Calculator</h2>
+                
+                <div class="form-group">
+                    <label>Total number of PCPs in practice:</label>
+                    <input type="number" id="numPCPs" value="2" min="1" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 1, 100, 2)">
+                </div>
+                
+                <div class="form-group">
+                    <label>Medicare Patients per PCP:</label>
+                    <input type="number" id="patientsPerPCP" value="200" min="50" max="500" oninput="calculateRevenue()" onchange="validateInput(this, 50, 500, 200)">
+                </div>
+                
+                <div class="form-group">
+                    <label>% of patients receiving APCM services:</label>
+                    <input type="number" id="apcmEligible" value="95" min="30" max="100" oninput="calculateRevenue()" onchange="validateInput(this, 30, 100, 95)">
+                </div>
+
+                <div class="form-group">
+                    <label>% patients billed with G0558 (QMB with 2+ chronic conditions):</label>
+                    <input type="number" id="billedG0558" value="25" min="0" max="100" oninput="updateBillingPercentages(); calculateRevenue()" onchange="validateInput(this, 0, 100, 25)">
+                </div>
+
+                <div class="form-group">
+                    <label>% patients billed with G0557 (2+ chronic conditions):</label>
+                    <input type="number" id="billedG0557" value="75" min="0" max="100" oninput="updateBillingPercentages(); calculateRevenue()" onchange="validateInput(this, 0, 100, 75)">
+                </div>
+
+
+
+
+
+                
+
+
+                <div class="form-group-dis">
+                    <label>G0558 rate (QMB with 2+ chronic conditions):</label>
+                    <input type="text" value="$107.07" disabled>
+                </div>
+                
+                <div class="form-group-dis">
+                    <label>G0557 rate (2+ chronic conditions):</label>
+                    <input type="text" value="$48.84" disabled>
+                </div>
+                
+
+        
+                <div id="results">
+                    <h3>Results</h3>
+                    <div class="form-group2">
+                        <label style="color: #ffffff;">Total Monthly <br> APCM Revenue Potential:</label>
+                        <input type="text" id="totalRevenueM" value="0" disabled>
+                    </div>
+                    <div class="form-group2">
+                        <label style="color: #ffffff;">Total Annual <br> APCM Revenue Potential:</label>
+                        <input type="text" id="totalRevenueA" value="0" disabled>
+                    </div>
+
+                
+                    <div class="form-group2">
+                        <label style="color: #ffffff;">PCP FTE <br> ($260K annually):</label>
+                        <input type="text" id="pcpfte" value="0" disabled>
+                    </div>
+
+                    <div class="form-group2">
+                        <label style="color: #ffffff;">Coordinator and Admin FTE <br> ($80k annually):</label>
+                        <input type="text" id="cafte" value="0" disabled>
+                    </div>
+
+                    <div class="form-group2">
+                        <label style="color: #ffffff;">Total Annual <br> Staff Costs:</label>
+                        <input type="text" id="totalCostsA" value="0" disabled>
+                    </div>
+
+                    <div class="form-group2">
+                        <label style="color: #ffffff;">Total Annual <br> APCM Profit Potential:</label>
+                        <input type="text" id="totalProfitA" value="0" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        
+
+    </div>
+    
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateBillingPercentages();
+            calculateRevenue();
+        });
+
+        function calculateRevenue() {
+            const numPCPs = parseFloat(document.getElementById("numPCPs").value);
+            const patientsPerPCP = parseFloat(document.getElementById("patientsPerPCP").value);
+            const apcmEligible = parseFloat(document.getElementById("apcmEligible").value);
+
+            const billedG0557 = parseFloat(document.getElementById("billedG0557").value);
+            const billedG0558 = parseFloat(document.getElementById("billedG0558").value);
+
+
+
+
+            // Fixed values for APCM rates (estimated based on similar services)
+
+            const rateG0557 = 48.84; // $ per APCM with 2+ chronic conditions
+            const rateG0558 = 107.07; // $ per APCM for QMB with 2+ chronic conditions
+        
+
+        
+            const totalRevenueMonthly = numPCPs * patientsPerPCP * apcmEligible / 100 * billedG0558 / 100 * rateG0558 + numPCPs * patientsPerPCP * apcmEligible / 100 * billedG0557 / 100 * rateG0557;
+            const totalRevenueAnnual = totalRevenueMonthly * 12;
+
+            const pcpfte = numPCPs * patientsPerPCP * apcmEligible/100/760/2.5;
+            const cafte = numPCPs * patientsPerPCP * apcmEligible*1.5/100/380;
+            const totalCostsAnnual = pcpfte * 260000 + cafte * 80000;
+            const totalProfitAnnual = totalRevenueAnnual - totalCostsAnnual;
+
+
+
+
+
+        
+            document.getElementById("totalRevenueM").value = `$${new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(totalRevenueMonthly)}`;
+            document.getElementById("totalRevenueA").value = `$${new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(totalRevenueAnnual)}`;
+
+            document.getElementById("pcpfte").value = `${pcpfte.toFixed(1)}`;
+            document.getElementById("cafte").value = `${cafte.toFixed(1)}`;
+            document.getElementById("totalCostsA").value = `$${new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(totalCostsAnnual)}`;
+            document.getElementById("totalProfitA").value = `$${new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(totalProfitAnnual)}`;
+        }
+        
+        function validateInput(element, min, max, defaultValue) {
+            const value = parseFloat(element.value);
+            if (value < min || value > max) {
+                alert(`The value for ${element.previousSibling.previousSibling.textContent.trim()} must be between ${min} and ${max}. Resetting to default value.`);
+                element.value = defaultValue;  // Reset to default value
+                calculateRevenue();  // Recalculate revenue with the default input
+            }
+        }
+
+
+
+        function updateBillingPercentages() {
+            // Get the input element that was just changed
+            const activeElement = document.activeElement;
+            const billedG0558Input = document.getElementById("billedG0558");
+            const billedG0557Input = document.getElementById("billedG0557");
+            
+            // Get current values
+            let billedG0558 = parseFloat(billedG0558Input.value) || 0;
+            let billedG0557 = parseFloat(billedG0557Input.value) || 0;
+            
+            // Ensure values are within valid range (0-100)
+            billedG0558 = Math.max(0, Math.min(100, billedG0558));
+            billedG0557 = Math.max(0, Math.min(100, billedG0557));
+            
+            // If G0558 was changed, adjust G0557
+            if (activeElement === billedG0558Input) {
+                billedG0557 = 100 - billedG0558;
+                billedG0557Input.value = billedG0557.toFixed(0);
+            } 
+            // If G0557 was changed, adjust G0558
+            else if (activeElement === billedG0557Input) {
+                billedG0558 = 100 - billedG0557;
+                billedG0558Input.value = billedG0558.toFixed(0);
+            }
+            // If neither was active (like on page load), ensure they sum to 100
+            else {
+                if (billedG0558 + billedG0557 !== 100) {
+                    billedG0557 = 100 - billedG0558;
+                    billedG0557Input.value = billedG0557.toFixed(0);
+                }
+            }
+            
+            // Update the inputs with the new values
+            billedG0558Input.value = billedG0558.toFixed(0);
+            billedG0557Input.value = billedG0557.toFixed(0);
+        }
+
+    </script>
+</body>
+</html>
